@@ -1,70 +1,169 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# AcademyMovies
 
-## Available Scripts
+AcademyMovies yra React web aplikacija su kuria galima peržiūrėti populiariausių filmų anonsinius filmukus ir paskaityti atsiliepimus apie filmą, jei filmas jau peržiūrėtas galima parašyti atsiliepimą.
 
-In the project directory, you can run:
+## Table of Contents
 
-### `npm start`
+- [Demo](#demo)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Available Scripts](#available-scripts)
+- [Tests](#tests)
+- [Contributing](#contributing)
+- [Contact](#contact)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Demo
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**Demo image**
+![image](https://github.com/user-attachments/assets/efa4469e-32a1-4444-a080-88e4bd6ab759)
 
-### `npm test`
+## Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Highlight the main features of your project:
+- **Feature 1: Populiariausių filmų naršymas.
+- **Feature 2:  Filmų anonsinių filmukų peržiūra.
+- **Feature 3: Galima perskaityti atsiliepimus apie filmus, taip pat parašyti atsiliepimus.
+- **API Integration: Duomenų bazej naudojama MongoDB, serverio palaikymui naudojama spring boot, trailerių peržiūrai naudota youtube.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technologies Used
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+This section provides an overview of the technologies and libraries used to build the project.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **React**: Frontend library for building user interfaces
+- **React Router**: For navigation and routing in the app
+- **Axios**: For making HTTP requests
+- **Styled Components** or **CSS/SCSS**: For styling components
+- **Node.js**: Backend API (if applicable)
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+You can replace or add to this list depending on your project.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Installation
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+To get a local copy of this project up and running, follow these simple steps:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Prerequisites
 
-## Learn More
+Ensure that you have the following installed:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- [Node.js](https://nodejs.org/en/download/) (v14+ recommended)
+- npm or [Yarn](https://classic.yarnpkg.com/en/docs/install/)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Steps
 
-### Code Splitting
+1. **Clone the repository**:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+   ```bash
+https://github.com/Augustas900/AcademyMovieFrontend
+Navigate to the project directory:
 
-### Analyzing the Bundle Size
+bash
+cd your-project-name
+Install dependencies:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+If using npm:
 
-### Making a Progressive Web App
+bash
+npm install
+Or if using Yarn:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+bash
+yarn install
+Set up environment variables:
 
-### Advanced Configuration
+Create a .env file in the root directory of your project and add necessary environment variables (e.g., API keys). Example:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+bash
+REACT_APP_API_URL=http://your-api-url.com
+Run the app:
 
-### Deployment
+Start the development server:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+bash
+npm start
+Or with Yarn:
 
-### `npm run build` fails to minify
+bash
+yarn start
+Open http://localhost:3000 to view it in the browser.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Building for Production
+To create a production build, run:
+
+bash
+npm run build
+This will build the app for production, optimizing it for speed and performance.
+
+Usage
+This section provides guidance on how to use your project after installation.
+
+Once the app is running, go to http://localhost:3000 in your browser.
+Follow the steps provided by the app (if applicable).
+Provide login details or any other necessary setup information.
+Example use cases or user flows to give users a better idea of how to use the app.
+Project Structure
+A quick overview of the directory structure of the project. This helps new developers understand how your project is organized.
+
+plaintext
+├── public/                # Static files such as index.html
+├── src/                   # Main source folder
+│   ├── components/        # Reusable components
+│   ├── pages/             # Different pages of the application
+│   ├── services/          # API calls or business logic
+│   ├── redux/             # Redux state management (if applicable)
+│   ├── utils/             # Helper functions or utilities
+│   ├── App.js             # Root component of the application
+│   ├── index.js           # Entry point of the application
+├── .env                   # Environment variables
+├── .gitignore             # Files ignored by Git
+├── package.json           # Project dependencies and scripts
+└── README.md              # Project documentation
+Available Scripts
+In the project directory, you can run the following scripts:
+
+npm start
+Runs the app in development mode. Open http://localhost:3000 to view it in the browser.
+
+npm run build
+Builds the app for production to the build folder. It bundles React in production mode, optimizing the build for the best performance.
+
+npm test
+Launches the test runner in interactive watch mode.
+
+npm run eject
+If you want to customize the default configuration (webpack, Babel, etc.), you can run npm run eject. This action is irreversible, and it extracts the configurations into your project for further customization.
+
+Tests
+This project uses Jest for testing (or any other testing framework, if applicable).
+
+To run tests, execute:
+
+bash
+npm test
+You can also run specific tests by navigating to the src folder and running the test files.
+
+Contributing
+Contributions are welcome! Here's how you can contribute:
+
+Fork the repository.
+Create a new feature branch (git checkout -b feature/new-feature).
+Make your changes and commit them (git commit -m 'Add a new feature').
+Push to the branch (git push origin feature/new-feature).
+Open a Pull Request.
+Please follow the project's coding style and conventions. Ensure that your changes pass any tests and that you add tests for new features.
+
+License
+This project is licensed under the MIT License. See the LICENSE file for more details.
+
+Contact
+For any inquiries or suggestions, feel free to reach out:
+
+Name: Augustinas
+Email: timofejevas.augustinas@gmail.com
+GitHub: Augustas900
+
