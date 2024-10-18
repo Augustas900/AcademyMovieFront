@@ -1,116 +1,116 @@
-import React, { useEffect, useRef, useState } from 'react';
-import api from '../../api/axiosConfig'; // Adjust this import based on your file structure
+// Importing necessary libraries and components from React, React Router, Axios, and Bootstrap
+import { useEffect, useRef, useState } from 'react';
+import api from '../../api/axiosConfig';
 import { useParams } from 'react-router-dom';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Alert } from 'react-bootstrap';
 import ReviewForm from '../reviewForm/ReviewForm';
+import React from 'react';
 
-const Reviews = ({ getMovieData, movie }) => {
-    // State to hold reviews
-    const [reviews, setReviews] = useState([]);
-    const revText = useRef(); // Reference for the review textarea
-    const params = useParams(); // Get URL parameters
-    const movieId = params.movieId; // Extract movie ID from URL
+// Reviews component definition
+const Reviews = ({ getMovieData, movie, reviews, setReviews }) => { // Removed 'user' prop, since it's no longer needed
+    // Using the useRef hook to create a reference for the review text input
+    const revText = useRef();
+    
+    // Error and success state for form submission feedback
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
 
-    // Fetch movie data when the component mounts or movieId changes
+    // Extracting movieId from the URL parameters using useParams hook
+    let params = useParams();
+    const movieId = params.movieId;
+
+    // useEffect hook to fetch movie data when the component is mounted or movieId changes
     useEffect(() => {
-        getMovieData(movieId);
-    }, [movieId, getMovieData]);
+        getMovieData(movieId); // Fetch movie data using the passed getMovieData function
+    }, [movieId, getMovieData]); // Effect will run whenever movieId or getMovieData changes
 
-    // Function to add a new review
+    // Function to handle the addition of a new review
     const addReview = async (e) => {
-        e.preventDefault(); // Prevent default form submission
-        const rev = revText.current; // Get the current value of the review textarea
+        e.preventDefault(); // Prevents the default form submission behavior
 
-        // Validate review content
-        if (!rev.value || rev.value.trim() === '') {
-            console.error("Review cannot be empty");
-            return; // Prevent submission if the review is empty
-        }
+        const rev = revText.current; // Accessing the current value of the review text input
+
+        // Removed the 'user' check here so that anyone can submit a review
 
         try {
-            // Make API call to post the review
-            const response = await api.post("/api/v1/reviews", {
-                reviewBody: rev.value, // Review content
-                imdbId: movieId // Movie ID
-            });
+            // Sending a POST request to the API to add a new review
+            const response = await api.post("/api/v1/reviews", { reviewBody: rev.value, imdbId: movieId });
 
-            // Log the API response for debugging
-            console.log('API Response:', response.data);
+            // Clear the review input and success state after submission
+            rev.value = "";
+            setSuccess("Review submitted successfully!");
+            setError(null); // Clear any previous errors
 
-            // Check if the response contains the new review
-            if (response.data && response.data.body) {
-                const newReview = {
-                    body: response.data.body, // Access the review body
-                    created: response.data.created, // Access the creation date
-                    id: response.data.id, // Access the ID
-                    updated: response.data.updated // Access the updated timestamp
-                };
+            // Fetch the updated movie data (which includes the latest reviews)
+            getMovieData(movieId);
 
-                // Update the reviews state
-                setReviews(prevReviews => [...prevReviews, newReview]); // Append new review
-                rev.value = ""; // Clear the textarea after adding the review
-            } else {
-                console.error('Unexpected response format', response.data);
-            }
         } catch (err) {
-            console.error('Error submitting review:', err.response?.data || err.message);
+            setError("Error submitting review. Please try again later.");
+            console.error(err); // Logging any errors that occur during the API request
         }
     };
 
+    // Returning JSX to render the component
     return (
         <Container>
+            {/* Row to display the heading */}
             <Row>
                 <Col><h3>Reviews</h3></Col>
             </Row>
+            
+            {/* Row to display the movie poster and the review form */}
             <Row className="mt-2">
                 <Col>
+                    {/* Displaying the movie poster */}
                     <img src={movie?.poster} alt={movie?.title} />
                 </Col>
                 <Col>
-                    <Row>
-                        <Col>
-                            <ReviewForm handleSubmit={addReview} revText={revText} labelText="Write a Review?" />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <hr />
-                        </Col>
-                    </Row>
-                    {
-                        reviews.length > 0 ? ( // Check if reviews array is not empty
-                            reviews.map((r, index) => ( // Use index as key
-                                <React.Fragment key={index}>
-                                    <Row>
-                                        <Col>{r.body}</Col> {/* Display the review body */}
-                                    </Row>
-                                    <Row>
-                                        <Col>
-                                            <small>{new Date(r.created).toLocaleString()}</small> {/* Display creation date */}
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col>
-                                            <hr />
-                                        </Col>
-                                    </Row>
-                                </React.Fragment>
-                            ))
-                        ) : (
+                    <>
+                        {/* Row for the review form */}
+                        <Row>
+                            <Col>
+                                {error && <Alert variant="danger">{error}</Alert>}
+                                {success && <Alert variant="success">{success}</Alert>}
+                                
+                                {/* Render the review form directly since user authentication is no longer required */}
+                                <ReviewForm handleSubmit={addReview} revText={revText} labelText="Write a Review?" />
+                            </Col>
+                        </Row>
+                        {/* Row for a horizontal line */}
+                        <Row>
+                            <Col>
+                                <hr />
+                            </Col>
+                        </Row>
+                    </>
+                    
+                    {/* Mapping over the reviews array and rendering each review */}
+                    {reviews?.map((r) => (
+                        <React.Fragment key={r._id}> {/* Use unique id as key */}
+                            {/* Row for the review text */}
                             <Row>
-                                <Col>No reviews yet!</Col>
+                                <Col>{r.body}</Col>
                             </Row>
-                        )
-                    }
+                            {/* Row for a horizontal line */}
+                            <Row>
+                                <Col>
+                                    <hr />
+                                </Col>
+                            </Row>                                
+                        </React.Fragment>
+                    ))}
                 </Col>
             </Row>
+            
+            {/* Final horizontal line */}
             <Row>
                 <Col>
                     <hr />
                 </Col>
-            </Row>
+            </Row>        
         </Container>
     );
-};
+}
 
+// Exporting the Reviews component for use in other parts of the application
 export default Reviews;
